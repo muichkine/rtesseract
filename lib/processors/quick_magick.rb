@@ -5,9 +5,6 @@ module QuickMagickProcessor
   def image_to_tiff
     tmp_file = Tempfile.new(["",".tif"])
     cat = @instance || read_with_processor(@source.to_s)
-    # cat.format("tif")
-    #cat.crop(@x, @y, @w, @h) unless [@x, @y, @w, @h].compact == []
-    #cat.crop("#{@x}x#{@y}+#{@w}+#{@h}") unless [@x, @y, @w, @h].compact == []
     cat.crop("#{@w}x#{@h}+#{@x}+#{@y}") unless [@x, @y, @w, @h].compact == []
     cat.write tmp_file.path.to_s
     return tmp_file
