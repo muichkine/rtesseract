@@ -20,6 +20,7 @@ describe "Rtesseract" do
     RTesseract.new(@path.join("images","test with spaces.tif").to_s).to_s_without_spaces.should eql("V2V4")
   end
 
+
   it " translate images .png, .jpg, .bmp" do
     RTesseract.new(@path.join("images","test.png").to_s).to_s_without_spaces.should eql("HW9W")
     RTesseract.new(@path.join("images","test.jpg").to_s).to_s_without_spaces.should eql("3R8Z")
@@ -90,4 +91,17 @@ describe "Rtesseract" do
      test.to_s_without_spaces.should eql("3R8Z")
   end
 
+  it " translate image to text with mini_magick" do
+    RTesseract.new(@image_tiff, {:processor => "mini_magick"}).to_s_without_spaces.should eql("43ZZ")
+    RTesseract.new(@path.join("images","test1.tif").to_s, {:processor => "mini_magick"}).to_s_without_spaces.should eql("V2V4")
+    RTesseract.new(@path.join("images","test with spaces.tif").to_s, {:processor => "mini_magick"}).to_s_without_spaces.should eql("V2V4")
+    RTesseract.new(@image_tiff,{:psm=>7, :processor => "mini_magick"}).crop!(140,10,36,40).to_s_without_spaces.should eql("4")
+  end
+
+  it " translate image to text with quick_magick" do
+    RTesseract.new(@image_tiff, {:processor => "quick_magick"}).to_s_without_spaces.should eql("43ZZ")
+    RTesseract.new(@path.join("images","test1.tif").to_s, {:processor => "quick_magick"}).to_s_without_spaces.should eql("V2V4")
+    RTesseract.new(@path.join("images","test with spaces.tif").to_s, {:processor => "quick_magick"}).to_s_without_spaces.should eql("V2V4")
+    RTesseract.new(@image_tiff,{:psm=>7, :processor => "quick_magick"}).crop!(140,10,36,40).to_s_without_spaces.should eql("4")
+  end
 end

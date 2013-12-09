@@ -174,11 +174,14 @@ class RTesseract
 
   private
   def choose_processor!
+    @processor ||= "rmagick"
+    require File.expand_path(File.dirname(__FILE__) + "/processors/#{@processor}.rb")
+
     if @processor.to_s == "mini_magick"
-      require File.expand_path(File.dirname(__FILE__) + "/processors/mini_magick.rb")
       self.class.send(:include, MiniMagickProcessor)
+    elsif @processor.to_s == "quick_magick"
+      self.class.send(:include, QuickMagickProcessor)
     else
-      require File.expand_path(File.dirname(__FILE__) + "/processors/rmagick.rb")
       self.class.send(:include, RMagickProcessor)
     end
   end

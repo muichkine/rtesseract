@@ -11,6 +11,8 @@ group :development do
 end
 
 group :test do
-  gem "rmagick"
+  gem "rmagick", :platform => :ruby
+  gem "mini_magick"
+  gem "quick_magick"
 end
 
