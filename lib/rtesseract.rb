@@ -4,6 +4,7 @@ require 'tempfile'
 
 require 'rtesseract/errors'
 require 'rtesseract/mixed'
+require 'rtesseract/box'
 
 # Processors
 require 'processors/rmagick.rb'
@@ -61,7 +62,6 @@ class RTesseract
     fail RTesseract::ImageNotSelectedError if src.nil?
     processor = RTesseract.choose_processor!(options.delete(:processor) || options.delete('processor'))
     image = processor.read_with_processor(src.to_s)
-
     yield image
     object = RTesseract.new('', options)
     object.from_blob(image.to_blob)
