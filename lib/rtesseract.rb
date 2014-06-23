@@ -62,7 +62,7 @@ class RTesseract
     processor = RTesseract.choose_processor!(options.delete(:processor) || options.delete('processor'))
     image = processor.read_with_processor(src.to_s)
 
-    yield image
+    image = (yield(image) or image)
     object = RTesseract.new('', options)
     object.from_blob(image.to_blob)
     object
